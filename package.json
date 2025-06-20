@@ -7,7 +7,7 @@
     "start": "node server.js",
     "dev": "nodemon server.js",
     "serve": "python3 -m http.server 8000",
-    "build": "echo '静态网站无需构建'",
+    "build": "mkdir -p public && cp index.html script.js README.md public/",
     "deploy": "echo '请参考README.md中的部署说明'",
     "validate": "echo '验证HTML和CSS语法'",
     "optimize": "echo '优化图片和资源文件'",
