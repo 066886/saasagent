@@ -395,8 +395,8 @@ async function handleFormSubmit(e) {
     try {
         console.log('开始提交表单数据:', formData);
         
-        // 直接调用服务器API
-        const response = await fetch('/api/feishu/submit', {
+        // 调用Vercel Serverless函数
+        const response = await fetch('/api/submit', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
