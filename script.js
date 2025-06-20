@@ -369,19 +369,33 @@ async function handleFormSubmit(e) {
     const formData = {
         name: document.getElementById('userName').value.trim(),
         email: document.getElementById('userEmail').value.trim(),
-        company: document.getElementById('userCompany').value.trim()
+        company: document.getElementById('userCompany').value.trim(),
+        language: currentLanguage  // 添加当前语言信息
     };
     
     // 简单验证
     const errors = [];
+    const validationMessages = {
+        zh: {
+            invalidName: '请输入有效的姓名（至少2个字符）',
+            invalidEmail: '请输入有效的邮箱地址',
+            invalidCompany: '请输入有效的公司名称'
+        },
+        en: {
+            invalidName: 'Please enter a valid name (at least 2 characters)',
+            invalidEmail: 'Please enter a valid email address',
+            invalidCompany: 'Please enter a valid company name'
+        }
+    };
+    
     if (!formData.name || formData.name.length < 2) {
-        errors.push('请输入有效的姓名（至少2个字符）');
+        errors.push(validationMessages[currentLanguage].invalidName);
     }
     if (!formData.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-        errors.push('请输入有效的邮箱地址');
+        errors.push(validationMessages[currentLanguage].invalidEmail);
     }
     if (!formData.company || formData.company.length < 2) {
-        errors.push('请输入有效的公司名称');
+        errors.push(validationMessages[currentLanguage].invalidCompany);
     }
     
     if (errors.length > 0) {
@@ -418,25 +432,49 @@ async function handleFormSubmit(e) {
             // 提交成功
             showSuccessMessage(result.msg, successMessage);
             document.getElementById('contactForm').reset();
-            showNotification('提交成功！我们会尽快与您联系。', 'success');
+            const successNotification = currentLanguage === 'zh' ? 
+                '提交成功！我们会尽快与您联系。' : 
+                'Submission successful! We will contact you soon.';
+            showNotification(successNotification, 'success');
         } else {
             // 提交失败
-            showErrorMessages([result.msg || '提交失败，请稍后重试'], errorMessages, errorList);
-            showNotification('提交失败，请稍后重试。', 'error');
+            const defaultError = currentLanguage === 'zh' ? 
+                '提交失败，请稍后重试' : 
+                'Submission failed, please try again later';
+            showErrorMessages([result.msg || defaultError], errorMessages, errorList);
+            const failNotification = currentLanguage === 'zh' ? 
+                '提交失败，请稍后重试。' : 
+                'Submission failed, please try again.';
+            showNotification(failNotification, 'error');
         }
     } catch (error) {
         console.error('表单提交错误:', error);
         
         // 根据错误类型给出更具体的提示
-        let errorMessage = '网络错误，请检查网络连接后重试。';
+        const errorMessages_i18n = {
+            zh: {
+                network: '网络错误，请检查网络连接后重试。',
+                connection: '无法连接到服务器，请检查网络连接。',
+                server: '服务器错误：',
+                notification: '网络错误，请重试。'
+            },
+            en: {
+                network: 'Network error, please check your connection and try again.',
+                connection: 'Unable to connect to server, please check your network connection.',
+                server: 'Server error: ',
+                notification: 'Network error, please try again.'
+            }
+        };
+        
+        let errorMessage = errorMessages_i18n[currentLanguage].network;
         if (error.name === 'TypeError' && error.message.includes('fetch')) {
-            errorMessage = '无法连接到服务器，请检查网络连接。';
+            errorMessage = errorMessages_i18n[currentLanguage].connection;
         } else if (error.message.includes('HTTP Error')) {
-            errorMessage = `服务器错误：${error.message}`;
+            errorMessage = `${errorMessages_i18n[currentLanguage].server}${error.message}`;
         }
         
         showErrorMessages([errorMessage], errorMessages, errorList);
-        showNotification('网络错误，请重试。', 'error');
+        showNotification(errorMessages_i18n[currentLanguage].notification, 'error');
     } finally {
         // 恢复按钮状态
         setSubmitLoading(false, submitBtn, submitText, loadingSpinner);
