@@ -1,0 +1,8 @@
+# Cloudflare Pages 重定向配置
+# 将API请求代理到Vercel Serverless函数
+
+# API路由代理到Vercel
+/api/* https://saasagent-omega.vercel.app/api/:splat 200
+
+# SPA路由处理 - 所有其他请求返回index.html
+/* /index.html 200 
