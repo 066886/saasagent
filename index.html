@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SaasAgent Pro - 让每个SaaS都拥有专属AI配置专家</title>
+    <meta name="description" content="一键接入，5分钟生成专业配置助手。复杂配置变成自然语言对话，零技术门槛，用户满意度提升80%">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            200: '#bae6fd',
+                            300: '#7dd3fc',
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            800: '#075985',
+                            900: '#0c4a6e',
+                        },
+                        accent: {
+                            50: '#fefce8',
+                            100: '#fef9c3',
+                            200: '#fef08a',
+                            300: '#fde047',
+                            400: '#facc15',
+                            500: '#eab308',
+                            600: '#ca8a04',
+                            700: '#a16207',
+                            800: '#854d0e',
+                            900: '#713f12',
+                        }
+                    },
+                    fontFamily: {
+                        'sans': ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                    animation: {
+                        'fade-in-up': 'fadeInUp 0.6s ease-out',
+                        'float': 'float 6s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(30px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMTYiIGN5PSIxNiIgcj0iMTYiIGZpbGw9IiMwZWE1ZTkiLz4KPHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiBzdHlsZT0idHJhbnNmb3JtOiB0cmFuc2xhdGUoOHB4LCA4cHgpIj4KPHBhdGggZD0iTTggMS4zMzMzM0MxMS42NzggMS4zMzMzMyAxNC42NjY3IDQuMzIxNjcgMTQuNjY2NyA4QzE0LjY2NjcgMTEuNjc4MyAxMS42NzggMTQuNjY2NyA4IDE0LjY2NjdDNC4zMjE2NyAxNC42NjY3IDEuMzMzMzMgMTEuNjc4MyAxLjMzMzMzIDhDMS4zMzMzMyA0LjMyMTY3IDQuMzIxNjcgMS4zMzMzMyA4IDEuMzMzMzNaIiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjIiLz4KPHBhdGggZD0iTTguMDAwMDEgNC42NjY2N1Y4TDEwLjY2NjcgMTAuNjY2NyIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KPC9zdmc+Cjwvc3ZnPgo=">
+</head>
+<body class="font-sans antialiased bg-white">
+    <!-- 导航栏 -->
+    <nav class="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-lg border-b border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <h1 class="text-2xl font-bold bg-gradient-to-r from-primary-600 to-primary-800 bg-clip-text text-transparent">
+                            SaasAgent.Pro
+                        </h1>
+                    </div>
+                </div>
+
+                <!-- Desktop Navigation -->
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8">
+                        <a href="#features" class="text-gray-600 hover:text-primary-600 px-3 py-2 text-sm font-medium transition-colors duration-200" data-i18n="nav.features">产品特色</a>
+                        <a href="#benefits" class="text-gray-600 hover:text-primary-600 px-3 py-2 text-sm font-medium transition-colors duration-200" data-i18n="nav.benefits">价值优势</a>
+                        <a href="#contact" class="bg-primary-600 text-white px-6 py-2 rounded-full text-sm font-medium hover:bg-primary-700 transition-all duration-200 shadow-lg hover:shadow-xl" data-i18n="nav.contact">立即体验</a>
+                    </div>
+                </div>
+
+                <!-- Language Switcher & Mobile Menu -->
+                <div class="flex items-center space-x-4">
+                    <!-- Language Toggle -->
+                    <div class="relative">
+                        <button id="languageToggle" class="flex items-center space-x-2 px-3 py-2 text-sm font-medium text-gray-600 hover:text-primary-600 transition-colors duration-200">
+                            <span id="currentLang">中文</span>
+                            <svg class="w-4 h-4 transform transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                    </div>
+
+                    <!-- Mobile menu button -->
+                    <div class="md:hidden">
+                        <button type="button" class="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100" id="mobile-menu-button">
+                            <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile menu -->
+        <div class="md:hidden hidden" id="mobile-menu">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white border-t border-gray-100">
+                <a href="#features" class="text-gray-600 hover:text-primary-600 block px-3 py-2 text-base font-medium" data-i18n="nav.features">产品特色</a>
+                <a href="#benefits" class="text-gray-600 hover:text-primary-600 block px-3 py-2 text-base font-medium" data-i18n="nav.benefits">价值优势</a>
+                <a href="#contact" class="bg-primary-600 text-white block px-3 py-2 rounded-md text-base font-medium mx-3 mt-4" data-i18n="nav.contact">立即体验</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
+        <!-- Background Elements -->
+        <div class="absolute inset-0 overflow-hidden">
+            <div class="absolute -top-40 -right-32 w-80 h-80 bg-gradient-to-br from-primary-200 to-primary-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-float"></div>
+            <div class="absolute -bottom-40 -left-32 w-80 h-80 bg-gradient-to-br from-accent-200 to-accent-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-float" style="animation-delay: -3s;"></div>
+        </div>
+
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32 text-center">
+            <div class="space-y-8">
+                <!-- Badge -->
+                <div class="inline-flex items-center px-4 py-2 rounded-full bg-primary-50 border border-primary-200 text-primary-700 text-sm font-medium">
+                    <span class="mr-2">🚀</span>
+                    <span data-i18n="hero.badge">AI驱动的下一代SaaS配置解决方案</span>
+                </div>
+
+                <!-- Main Heading -->
+                <h1 class="text-4xl md:text-6xl lg:text-7xl font-bold text-gray-900 leading-tight">
+                    <span data-i18n="hero.title1">让每个SaaS都拥有</span><br>
+                    <span class="bg-gradient-to-r from-primary-600 via-primary-700 to-indigo-800 bg-clip-text text-transparent" data-i18n="hero.title2">专属AI配置专家</span>
+                </h1>
+
+                <!-- Subtitle -->
+                <p class="text-xl md:text-2xl text-gray-600 max-w-4xl mx-auto leading-relaxed" data-i18n="hero.subtitle">
+                    一键接入，5分钟生成专业配置助手<br class="hidden sm:block">
+                    复杂配置变成自然语言对话，零技术门槛，用户满意度提升80%
+                </p>
+
+                <!-- CTA Buttons -->
+                <div class="flex flex-col sm:flex-row gap-4 justify-center items-center pt-8">
+                    <a href="#contact" class="inline-flex items-center px-8 py-4 bg-primary-600 text-white font-semibold rounded-xl hover:bg-primary-700 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+                        <span data-i18n="hero.cta.primary">免费试用</span>
+                        <svg class="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                        </svg>
+                    </a>
+                    <a href="#contact" class="inline-flex items-center px-8 py-4 bg-white text-gray-700 font-semibold rounded-xl border-2 border-gray-200 hover:border-primary-200 hover:bg-primary-50 transition-all duration-200">
+                        <svg class="mr-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h1.586a1 1 0 01.707.293l2.414 2.414a1 1 0 00.707.293H15M6 10a2 2 0 012-2h4a2 2 0 012 2v1a2 2 0 01-2 2h-4a2 2 0 01-2-2v-1z"></path>
+                        </svg>
+                        <span data-i18n="hero.cta.secondary">观看演示</span>
+                    </a>
+                </div>
+
+                <!-- Stats -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 pt-16 max-w-4xl mx-auto">
+                    <div class="text-center">
+                        <div class="text-3xl md:text-4xl font-bold bg-gradient-to-r from-primary-600 to-indigo-600 bg-clip-text text-transparent">50+</div>
+                        <p class="text-gray-600 mt-2" data-i18n="hero.stats.clients">SaaS服务商信赖</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-3xl md:text-4xl font-bold bg-gradient-to-r from-accent-500 to-orange-500 bg-clip-text text-transparent" data-i18n="hero.stats.time">5分钟</div>
+                        <p class="text-gray-600 mt-2" data-i18n="hero.stats.speed">快速生成配置专家</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-3xl md:text-4xl font-bold bg-gradient-to-r from-green-500 to-emerald-500 bg-clip-text text-transparent">80%</div>
+                        <p class="text-gray-600 mt-2" data-i18n="hero.stats.satisfaction">用户满意度提升</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 产品特色 -->
+    <section id="features" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4" data-i18n="features.title">核心功能特色</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto" data-i18n="features.subtitle">我们支持快速学习某个SaaS的服务范围+API接口，并且快捷接入我们的多Agent体系</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="bg-white border border-gray-200 rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+                    <div class="w-12 h-12 bg-primary-100 rounded-xl flex items-center justify-center mb-6">
+                        <svg class="w-6 h-6 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-3" data-i18n="features.ai.title">AI快速学习</h3>
+                    <p class="text-gray-600" data-i18n="features.ai.desc">自动解析任何SaaS的API和文档，5分钟内生成专业配置专家，无需人工训练和调优</p>
+                </div>
+                <div class="bg-white border border-gray-200 rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+                    <div class="w-12 h-12 bg-primary-100 rounded-xl flex items-center justify-center mb-6">
+                        <svg class="w-6 h-6 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-3" data-i18n="features.agent.title">多Agent协作</h3>
+                    <p class="text-gray-600" data-i18n="features.agent.desc">跨SaaS服务配置协同，统一的配置管理体验，企业级配置流程编排</p>
+                </div>
+                <div class="bg-white border border-gray-200 rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+                    <div class="w-12 h-12 bg-primary-100 rounded-xl flex items-center justify-center mb-6">
+                        <svg class="w-6 h-6 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-3" data-i18n="features.dialogue.title">自然语言对话</h3>
+                    <p class="text-gray-600" data-i18n="features.dialogue.desc">用户只需说出需求，AI自动完成功能配置，复杂操作变成简单对话</p>
+                </div>
+                <div class="bg-white border border-gray-200 rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+                    <div class="w-12 h-12 bg-primary-100 rounded-xl flex items-center justify-center mb-6">
+                        <svg class="w-6 h-6 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-3" data-i18n="features.understanding.title">深度理解</h3>
+                    <p class="text-gray-600" data-i18n="features.understanding.desc">不只是API调用，真正理解业务逻辑，提供最佳实践建议，预测潜在配置问题</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 核心价值主张 -->
+    <section id="benefits" class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4" data-i18n="benefits.title">核心价值主张</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto" data-i18n="benefits.subtitle">快速接入，立即见效</p>
+            </div>
+            
+            <!-- 快速接入 -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-20">
+                <div class="bg-white rounded-3xl p-8 shadow-xl">
+                    <div class="w-16 h-16 bg-primary-100 rounded-2xl flex items-center justify-center mb-6">
+                        <svg class="w-8 h-8 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-4" data-i18n="benefits.integration.title">⚡ 极速接入</h3>
+                    <p class="text-gray-600 text-lg leading-relaxed mb-6" data-i18n="benefits.integration.desc">一键接入您的SaaS服务，5分钟内自动生成专属AI配置专家，无需复杂的技术对接和人工训练</p>
+                    <ul class="space-y-3">
+                        <li class="flex items-center text-gray-600">
+                            <svg class="w-5 h-5 text-green-500 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span data-i18n="benefits.integration.feature1">一键API接入，零代码部署</span>
+                        </li>
+                        <li class="flex items-center text-gray-600">
+                            <svg class="w-5 h-5 text-green-500 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span data-i18n="benefits.integration.feature2">自动学习产品文档和API</span>
+                        </li>
+                        <li class="flex items-center text-gray-600">
+                            <svg class="w-5 h-5 text-green-500 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span data-i18n="benefits.integration.feature3">5分钟生成专业配置助手</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="bg-white rounded-3xl p-8 shadow-xl">
+                    <div class="w-16 h-16 bg-primary-100 rounded-2xl flex items-center justify-center mb-6">
+                        <svg class="w-8 h-8 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-4" data-i18n="benefits.results.title">📈 立即见效</h3>
+                    <p class="text-gray-600 text-lg leading-relaxed mb-6" data-i18n="benefits.results.desc">通过自然语言对话，AI助手直接完成配置操作</p>
+                    
+                    <!-- 对话示例 -->
+                    <div class="bg-gray-50 rounded-xl p-4 mb-6">
+                        <div class="text-sm text-gray-500 mb-3 text-center" data-i18n="benefits.results.chat.title">真实配置对话示例</div>
+                        <div class="space-y-3">
+                            <div class="flex items-start">
+                                <div class="bg-blue-500 rounded-full w-8 h-8 flex items-center justify-center mr-3 flex-shrink-0">
+                                    <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z" clip-rule="evenodd"></path>
+                                    </svg>
+                                </div>
+                                <div class="bg-white rounded-lg px-4 py-2 text-sm text-gray-700 flex-1 shadow-sm">
+                                    <span data-i18n="benefits.results.chat.user">"我需要设置API限流规则，每分钟最多100次请求"</span>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="bg-primary-500 rounded-full w-8 h-8 flex items-center justify-center mr-3 flex-shrink-0">
+                                    <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                                    </svg>
+                                </div>
+                                <div class="bg-primary-50 rounded-lg px-4 py-2 text-sm text-gray-700 flex-1 shadow-sm">
+                                    <span data-i18n="benefits.results.chat.ai">"已为您配置完成！API限流已设置为100次/分钟，配置文件已更新。"</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <ul class="space-y-3">
+                        <li class="flex items-center text-gray-600">
+                            <svg class="w-5 h-5 text-green-500 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span data-i18n="benefits.results.feature1">说话即配置，无需手动操作</span>
+                        </li>
+                        <li class="flex items-center text-gray-600">
+                            <svg class="w-5 h-5 text-green-500 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span data-i18n="benefits.results.feature2">AI理解意图，自动执行配置</span>
+                        </li>
+                        <li class="flex items-center text-gray-600">
+                            <svg class="w-5 h-5 text-green-500 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span data-i18n="benefits.results.feature3">用户满意度提升80%</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- 对比展示 -->
+            <div class="bg-white rounded-3xl p-8 shadow-xl">
+                <h3 class="text-2xl font-bold text-gray-900 text-center mb-8" data-i18n="benefits.comparison.title">接入前后对比</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="text-center">
+                        <div class="text-red-500 text-lg font-semibold mb-4" data-i18n="benefits.comparison.before">接入前</div>
+                        <ul class="space-y-3 text-gray-600">
+                            <li data-i18n="benefits.comparison.before.item1">❌ 用户配置困难，经常出错</li>
+                            <li data-i18n="benefits.comparison.before.item2">❌ 大量客服时间处理配置问题</li>
+                            <li data-i18n="benefits.comparison.before.item3">❌ 用户流失率高，满意度低</li>
+                            <li data-i18n="benefits.comparison.before.item4">❌ 配置成功率仅60%</li>
+                        </ul>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-green-500 text-lg font-semibold mb-4" data-i18n="benefits.comparison.after">接入后</div>
+                        <ul class="space-y-3 text-gray-600">
+                            <li data-i18n="benefits.comparison.after.item1">✅ AI专家指导，配置轻松简单</li>
+                            <li data-i18n="benefits.comparison.after.item2">✅ 客服工作量减少90%</li>
+                            <li data-i18n="benefits.comparison.after.item3">✅ 用户满意度大幅提升</li>
+                            <li data-i18n="benefits.comparison.after.item4">✅ 配置成功率提升至95%</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 工作流程 -->
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4" data-i18n="workflow.title">简单三步，快速上手</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto" data-i18n="workflow.subtitle">从接入到服务，全程自动化</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12">
+                <div class="text-center relative">
+                    <div class="bg-primary-600 w-16 h-16 rounded-full flex items-center justify-center text-white text-2xl font-bold mx-auto mb-6 shadow-lg">1</div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-4" data-i18n="workflow.step1.title">接入SaaS</h3>
+                    <p class="text-gray-600" data-i18n="workflow.step1.desc">提供您的SaaS文档和API，我们的AI开始自动学习</p>
+                    <!-- 连接线 -->
+                    <div class="hidden md:block absolute top-8 left-full w-8 h-0.5 bg-primary-300 transform -translate-x-4"></div>
+                </div>
+                <div class="text-center relative">
+                    <div class="bg-primary-600 w-16 h-16 rounded-full flex items-center justify-center text-white text-2xl font-bold mx-auto mb-6 shadow-lg">2</div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-4" data-i18n="workflow.step2.title">生成专家</h3>
+                    <p class="text-gray-600" data-i18n="workflow.step2.desc">5分钟内自动生成专属的AI配置专家，无需人工干预</p>
+                    <!-- 连接线 -->
+                    <div class="hidden md:block absolute top-8 left-full w-8 h-0.5 bg-primary-300 transform -translate-x-4"></div>
+                </div>
+                <div class="text-center">
+                    <div class="bg-primary-600 w-16 h-16 rounded-full flex items-center justify-center text-white text-2xl font-bold mx-auto mb-6 shadow-lg">3</div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-4" data-i18n="workflow.step3.title">开始服务</h3>
+                    <p class="text-gray-600" data-i18n="workflow.step3.desc">用户可以通过自然语言与AI专家对话完成配置</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <!-- 联系我们 -->
+    <section id="contact" class="py-20 bg-primary-600">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div class="text-white">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-6" data-i18n="contact.title">准备开始了吗？</h2>
+                    <p class="text-xl text-blue-100 mb-6" data-i18n="contact.description1">想象一下，你的SaaS用户不再因为复杂配置而流失，不再需要大量客服支持配置问题。</p>
+                    <p class="text-lg text-blue-100 mb-8" data-i18n="contact.description2">通过AI自动学习你的产品文档和API，生成专业的配置助手。用户只需用自然语言描述需求，AI就能完成所有配置工作。</p>
+                    
+
+                </div>
+                
+                <div class="bg-white rounded-3xl p-8 shadow-2xl">
+                    <form id="contactForm" class="space-y-6">
+                        <!-- 错误提示区域 -->
+                        <div id="errorMessages" class="hidden bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-xl mb-4">
+                            <ul id="errorList" class="list-disc list-inside text-sm"></ul>
+                        </div>
+                        
+                        <!-- 成功提示区域 -->
+                        <div id="successMessage" class="hidden bg-green-50 border border-green-200 text-green-600 px-4 py-3 rounded-xl mb-4">
+                            <p class="text-sm"></p>
+                        </div>
+                        
+                                                                         <div>
+                            <label for="userName" class="block text-sm font-medium text-gray-700 mb-2" data-i18n="contact.form.name">您的姓名</label>
+                            <input type="text" id="userName" name="name" required class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors duration-200" data-i18n-placeholder="contact.form.name.placeholder" placeholder="请输入您的真实姓名">
+                        </div>
+                        <div>
+                            <label for="userEmail" class="block text-sm font-medium text-gray-700 mb-2" data-i18n="contact.form.email">邮箱地址</label>
+                            <input type="email" id="userEmail" name="email" required class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors duration-200" data-i18n-placeholder="contact.form.email.placeholder" placeholder="your-email@company.com">
+                        </div>
+                        <div>
+                            <label for="userCompany" class="block text-sm font-medium text-gray-700 mb-2" data-i18n="contact.form.company">公司名称</label>
+                            <input type="text" id="userCompany" name="company" required class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors duration-200" data-i18n-placeholder="contact.form.company.placeholder" placeholder="请输入公司名称">
+                        </div>
+                                                 <button type="submit" id="submitBtn" class="w-full bg-primary-600 text-white font-semibold py-4 px-6 rounded-xl hover:bg-primary-700 transition-colors duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-1 disabled:opacity-50 disabled:cursor-not-allowed">
+                             <span id="submitText" data-i18n="contact.form.submit">立即联系我们</span>
+                             <span id="loadingSpinner" class="hidden">
+                                 <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                     <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                     <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                 </svg>
+                                 提交中...
+                             </span>
+                         </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="bg-gray-900 text-white py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+                <div>
+                    <h3 class="text-2xl font-bold text-primary-400 mb-4">SaasAgent.Pro</h3>
+                    <p class="text-gray-300 mb-6 max-w-md" data-i18n="footer.description">让每个SaaS都拥有专属AI配置专家</p>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-4" data-i18n="footer.product.title">产品</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#features" class="text-gray-300 hover:text-white transition-colors duration-200" data-i18n="footer.product.features">功能特色</a></li>
+                        <li><a href="#demo" class="text-gray-300 hover:text-white transition-colors duration-200" data-i18n="footer.product.demo">产品演示</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 pt-8">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <p class="text-gray-400 text-sm" data-i18n="footer.copyright">&copy; 2025 SaasAgent.Pro. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 引入脚本文件 -->
+    <script src="script.js"></script>
+</body>
+</html> 

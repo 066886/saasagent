@@ -1,0 +1,20 @@
+# 飞书应用配置示例
+# 请从飞书开发者后台获取以下信息
+# 复制此文件为 .env 并填入真实的值
+
+# 飞书应用 ID
+FEISHU_APP_ID=cli_your_app_id_here
+
+# 飞书应用密钥
+FEISHU_APP_SECRET=your_app_secret_here
+
+# 多维表格 App Token
+# 从多维表格 URL 中获取：https://xxx.feishu.cn/base/{APP_TOKEN}/...
+FEISHU_APP_TOKEN=your_app_token_here
+
+# 数据表 ID
+# 从多维表格 URL 中获取：.../{APP_TOKEN}?table={TABLE_ID}&view=...
+FEISHU_TABLE_ID=your_table_id_here
+
+# 服务器端口（可选）
+PORT=3000 
